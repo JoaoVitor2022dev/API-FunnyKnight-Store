@@ -78,31 +78,72 @@ const getCurrentUser = async (req, res) => {
     res.status(200).json(user);
 }; 
 
-// Get user by id 
+const userUpdate = async (req, res) => {
+    const { name, address, password, phone, email } = req.body;
+    const reqUser = req.user;
 
-const getUserById = async (req, res) => {
-    const { id } = req.params
- 
     try {
-       const user = await User.findByPk(id, { attributes: { exclude: ['password'] }});
- 
-       // check if user exist 
-       if (!user) {
-       res.status(404).json({ erros: ["Usuário nao encontrado."] });
-       return
-       }
- 
-       res.status(200).json(user);
- 
-    }catch (error) {
-       res.status(404).json({ erros: ["Usuário nao existe."] });
-    }
- }
+        const user = await User.findByPk(reqUser.id);
+        
+        if (!user) {
+            res.status(404).json({ errors: ["Usuário não encontrado"] });
+            return;
+        }
 
+        if (name) {
+            user.name = name;
+        }
+
+        // Check phone
+        if (phone && user.phone !== phone) {
+            const phoneExists = await User.findOne({ where: { phone } });
+
+            if (phoneExists) {
+                res.status(400).json({ errors: ["Opa! Escolha outro número, este número já está em uso no nosso banco de dados."] });
+                return;
+            }
+
+            user.phone = phone;
+        }
+
+        // Check email
+        if (email && user.email !== email) {
+            const emailExists = await User.findOne({ where: { email } });
+
+            if (emailExists) {
+                res.status(400).json({ errors: ["Opa! Escolha outro e-mail, este e-mail já está em uso no nosso banco de dados."] });
+                return;
+            }
+
+            user.email = email;
+        }
+
+        if (address) {
+            user.address = address;
+        }
+
+        if (password) {
+            // Generate password hash
+            const salt = await bcrypt.genSalt();
+            const passwordHash = await bcrypt.hash(password, salt);
+
+            user.password = passwordHash;
+        }
+
+        await user.save();
+
+        res.status(200).json(user);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde"] });
+    }
+};
 
 module.exports = {
     register,
     login,
     getCurrentUser,
-    getUserById
+    userUpdate
 }
+

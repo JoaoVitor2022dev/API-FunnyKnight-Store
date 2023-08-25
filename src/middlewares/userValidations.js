@@ -19,12 +19,23 @@ const userCreateValidation = () => {
 const userLoginValidation = () => { 
   return [ 
        body("email").isString().withMessage("O e-mail é obrigatório.").isEmail().withMessage("Insira um e-mail váido."),
-       body("password").isString().withMessage("A senha é obrigatório.").isLength({ min: 5 }).withMessage("A senha deve ter no minimo 5 caracteris váido."),
+       body("password").isString().withMessage("A senha é obrigatório."),
   ];
 }; 
 
+const userUpdateValidation = () => {
+   return [
+    body("name").optional().isLength({ min: 3 }).withMessage("O nome precisa ter no minimo 3 caracteres"),
+    body("email").optional().isEmail().withMessage("Insira um e-mail váido."),
+    body("phone").optional().isLength({ min: 11 }).withMessage("O telefone precisa ser válido"),
+    body("address").optional().isLength({ min: 5 }).withMessage("Insira um endereço váido."),
+    body("password").optional().isLength({ min: 5 }).withMessage("A senha deve ter no minimo 5 caracteris váido."),
+   ]
+};
+
 module.exports = {
     userCreateValidation,
-    userLoginValidation
+    userLoginValidation,
+    userUpdateValidation
 }
 
