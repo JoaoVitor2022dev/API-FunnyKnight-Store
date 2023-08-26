@@ -2,10 +2,6 @@ const express = require("express");
 const router = express();
 
 router.use("/api/users", require("./UserRoutes"));
-
-// test router
-router.get("/", ( req , res ) => { 
-    res.send("rota testing funcionando normal..."); 
-})
+router.use("/api/product", require("./ProductRoutes"));
 
 module.exports = router;

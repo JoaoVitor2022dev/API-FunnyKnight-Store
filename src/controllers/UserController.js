@@ -70,7 +70,6 @@ const login = async(req, res) => {
     }
 };
 
-//  get current logged in user 
 const getCurrentUser = async (req, res) => {  
     
     const user = req.user; 
@@ -83,7 +82,7 @@ const userUpdate = async (req, res) => {
     const reqUser = req.user;
 
     try {
-        const user = await User.findByPk(reqUser.id);
+        const user = await User.findOne({ where: reqUser.id ,attributes: { exclude: ['password']}});
         
         if (!user) {
             res.status(404).json({ errors: ["Usuário não encontrado"] });
@@ -108,13 +107,12 @@ const userUpdate = async (req, res) => {
 
         // Check email
         if (email && user.email !== email) {
-            const emailExists = await User.findOne({ where: { email } });
+            const emailExists = await User.findOne({ where: { email }});
 
-            if (emailExists) {
-                res.status(400).json({ errors: ["Opa! Escolha outro e-mail, este e-mail já está em uso no nosso banco de dados."] });
+        if (emailExists) {
+            res.status(400).json({ errors: ["Opa! Escolha outro e-mail, este e-mail já está em uso no nosso banco de dados."] });
                 return;
-            }
-
+        }
             user.email = email;
         }
 
