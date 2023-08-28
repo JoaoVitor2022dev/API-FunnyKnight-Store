@@ -6,6 +6,7 @@ const productCreateValidation = () => {
              body("productSize").isString().withMessage("O tamanho do produto é obrigatório.").isLength({ min: 1 }).withMessage("Forneça o tamanho do produto. (M/P/G)"),
              body("color").isString().withMessage("A cor do produto é obrigatório.").isLength({ min: 4 }).withMessage("Insira a cor do produto"),
              body("price").isNumeric().withMessage("0 valor do produto é obrigatório.").isLength({ min: 1 }).withMessage("Insira a preço do produto"), 
+             body("productCode").isString().withMessage("O codigo do produto é obrigatório.").isLength({ min: 5 }).withMessage("O codigo do produto precisa ter no minimo 5 caracteris"),
              body("clothingAge").isNumeric().withMessage("A idade do usuario do produto é obrigatório.").isLength({ min: 1 }).withMessage("Insira a idade do usuario do produto"),
              body("image").custom((value, { req }) => {
             if (!req.file) {
@@ -20,6 +21,7 @@ module.exports = {
     productCreateValidation,
 }
 
+// productCode
 
 
 

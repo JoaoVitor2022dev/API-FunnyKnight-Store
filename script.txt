@@ -1,0 +1,53 @@
+// front end  - normal user
+
+1 - criar conta e resgistrar-se no site 
+2 - olhar os produtos em destaque no nosso site 
+3 - receber desconto pot ter feito o login e enviar mensagem para o ususrio pelo email dele 
+4 -  olhar cada produto com detalhe 
+// -- depois --  5 - ter um link para o numero do usuario no whatsapp para comprar 
+// - depois -  6 - quero madar para um dashboard os valor dos produtos e com a informaçao do usuario seja enviada para um dashboar USER; 
+
+
+// front end - admin user 
+
+1 - funcionalidade de registrar dados do produto; 
+2 - CRUD completo; 
+// - depois   3 - pedido dashboar de pedidos
+// -  depois  4 - pedido finalizado 
+
+// back end 
+
+// depois - 1 - quero madar para um dashboard os valor dos produtos e com a informaçao do usuario seja enviada para um dashboar admin; 
+2 - criar um sistema para o admin 
+3 - criar tabelas de dados como adress 
+4 - criar uma tabela de pedidos  
+
+// bando de daos 
+1 - slq 
+2 - ve as forma de chave estrageira e como mapear os dados 
+
+// plataforma de hospedagem de api e banco de dados 
+
+// ver como hospedar os dados e a imagem na AWS
+
+
+
+// criar produto = admin { 
+    model = admin 
+    produtos
+}
+
+user { 
+    login
+    adress
+}
+
+
+// o que fazer agora no banck end 
+
+1 - criar um model , controller, e routa para o admin 
+
+2 - criar um model, controller, e router para o adress 
+
+
+

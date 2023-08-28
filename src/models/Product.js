@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/conn'); 
-const User = require("../models/User");
+const AdminUser = require("./AdminUser");
 
 const Product = sequelize.define('Product', {
     description: {
@@ -29,12 +29,16 @@ const Product = sequelize.define('Product', {
     },
     image: {
         type: DataTypes.STRING
-    }
+    },
+    productCode: {
+        type: DataTypes.STRING,
+        unique: true 
+    },
 }, {
     timestamps: true,
 });
 
-Product.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Product);
+Product.belongsTo(AdminUser, { foreignKey: AdminUser.id });
+AdminUser.hasMany(Product);
 
 module.exports = Product;
