@@ -45,9 +45,13 @@ user {
 
 // o que fazer agora no banck end 
 
-1 - criar um model , controller, e routa para o admin 
+2 - criar um model, controller, e router para o adress;  
+{
+    1 - finalizar o requerimento do endereço e testar ele; 
+}
 
-2 - criar um model, controller, e router para o adress 
+3 - criar o models, controller e router para os produtos;
+
 
 
 

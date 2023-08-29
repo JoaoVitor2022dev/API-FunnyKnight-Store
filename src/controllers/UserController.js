@@ -33,12 +33,12 @@ const register = async (req, res) => {
         const newUser = await User.create({ name, email, address, phone, password: passwordHash }); 
         
         if (!newUser) {
-             return res.status(422).json({ errors: ["Ocorreu um erro no nosso servidor tente mais tarde."] }); 
+             return res.status(422).json({ errors: ["Ocorreu um erro, tente mais tarde."] }); 
         } 
                
-        return res.status(201).json({ id: newUser.id, token: generateToken(newUser.id) });
+        res.status(201).json({ id: newUser.id, token: generateToken(newUser.id) });
     } catch (error) {
-        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde"]})
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"]})
         console.log(error);
     }
 }
@@ -65,7 +65,7 @@ const login = async(req, res) => {
         // return user with token 
         return res.status(201).json({ id: user.id, token: generateToken(user.id)});  
     } catch (error) {
-        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde"]})
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"]})
         console.log(error);
     }
 };
@@ -134,7 +134,7 @@ const userUpdate = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde"] });
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"] });
     }
 };
 

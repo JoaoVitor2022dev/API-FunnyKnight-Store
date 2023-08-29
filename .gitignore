@@ -3,3 +3,6 @@ node_modules
 
 // variaveis de segurança
 .env
+
+// script do porjeto 
+script

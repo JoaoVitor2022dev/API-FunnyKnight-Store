@@ -17,15 +17,45 @@ const registerAdminUser = async (req, res) => {
     const { name, email, password } = req.body;
     
     try {
-        const dataExistInTable = await AdminUser.findAll();
+        const dataExistInTable = await AdminUser.count();
+        
+        if (dataExistInTable <= 1) {
+            res.status(401).json({ errors: ["Faça Login para poder criar um novo Usuario Administrador"] });
+            return;
+        }
 
-        console.log(dataExistInTable);
+        if (!name) {
+            res.status(401).json({ errors: ["O nome é obrigatorio!"] }); 
+            return; 
+        }
 
-       if (dataExistInTable.length <= 1) {
-         res.status(401).json({ errors: ["Faça Login para poder criar um novo Usuario Administrador"] })
-         return; 
-       }
+        const existingEmailAdminUser = await AdminUser.findOne({ where: { email } }); 
 
+        if (existingEmailAdminUser) { 
+            return res.status(401).json({ errors: ["Por favor, use outro email."] }); 
+        } 
+
+        const salt = await bcrypt.genSalt(); 
+        const passwordHash = await bcrypt.hash(password, salt);
+        
+        const newAdminUser = await AdminUser.create({ name, email, password: passwordHash }); 
+        
+        if (!newAdminUser) {
+             return res.status(422).json({ errors: ["Ocorreu um erro, tente mais tarde."] }); 
+        } 
+               
+        return res.status(201).json({ id: newAdminUser.id, token: generateToken(newAdminUser.id) });
+    } catch (error) {
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"]});
+    }    
+}; 
+
+const registerAdminUserAuth = async (req, res) => {
+    
+    const { name, email, password } = req.body;
+    
+    try {
+        
         if (!name) {
             res.status(401).json({ errors: ["O nome é obrigatorio!"] }); 
             return; 
@@ -48,7 +78,7 @@ const registerAdminUser = async (req, res) => {
                
         return res.status(201).json({ id: newAdminUser.id, token: generateToken(newAdminUser.id) });
     } catch (error) {
-        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde", error]});
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"]});
     }    
 }; 
 
@@ -74,16 +104,58 @@ const loginAdminUser = async (req, res) => {
         // return user with token 
         return res.status(201).json({ id: adminUser.id, token: generateToken(adminUser.id)});  
     } catch (error) {
-        res.status(500).json({ errors: ["Ocorreu um erro no nosso servidor, por favor tente mais tarde"]})
+        res.status(500).json({ errors: ["Ocorreu um erro, por favor tente mais tarde"]})
         console.log(error);
     }
 
 }; 
 
 
+const AdminUserUpdate = async (req, res) => {
+    const { name, password, email } = req.body;
+    const reqUser = req.user;
+
+        const adminUser = await AdminUser.findOne({ where: reqUser.id , attributes: { exclude: ['password']}});
+        
+        if (!adminUser) {
+            res.status(404).json({ errors: ["Usuário não encontrado"] });
+            return;
+        }
+
+        if (name) {
+            adminUser.name = name;
+        }
+
+        // Check email
+        if (email && adminUser.email !== email) {
+            const emailExists = await AdminUser.findOne({ where: { email }});
+
+        if (emailExists) {
+            res.status(400).json({ errors: ["Opa! Escolha outro e-mail, este e-mail já está em uso no nosso banco de dados."] });
+                return;
+        }
+          adminUser.email = email;
+        }
+
+        if (password) {
+            // Generate password hash
+            const salt = await bcrypt.genSalt();
+            const passwordHash = await bcrypt.hash(password, salt);
+
+            adminUser.password = passwordHash;
+        }
+
+        await adminUser.save();
+
+        res.status(200).json(adminUser);
+}; 
+
+
 module.exports = { 
-    registerAdminUser, 
-    loginAdminUser
+    registerAdminUser,
+    registerAdminUserAuth, 
+    loginAdminUser,
+    AdminUserUpdate
 }
 
 
