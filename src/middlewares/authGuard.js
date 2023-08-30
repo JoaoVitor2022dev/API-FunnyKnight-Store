@@ -16,7 +16,9 @@ const authGuard = async (req, res, next) => {
    
       const verified = jwt.verify(token, jwtSecret); 
       
-      req.user = await User.findOne({where: {id: verified.id },attributes: { exclude: ['password']}});
+      req.user = await User.findOne({where: {id: verified.id }, attributes: { exclude: ['password']}});
+
+      console.log("passou por aqui");
 
        next();  
      } catch (err) {

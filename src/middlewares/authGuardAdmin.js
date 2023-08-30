@@ -1,6 +1,6 @@
 const AdminUser = require('../models/AdminUser');
 const jwt = require('jsonwebtoken'); 
-const jwtSecret = process.env.JWT_SECRET; 
+const jwtSecret_admin = process.env.JWT_SECRET_ADMIN; 
 
 const authGuardAdmin = async (req, res, next) => {
     const authHeader = req.headers['authorization']
@@ -11,10 +11,10 @@ const authGuardAdmin = async (req, res, next) => {
 
     // check if token valid
      try {
-   
-      const verified = jwt.verify(token, jwtSecret); 
       
-      req.user = await AdminUser.findOne({where: {id: verified.id },attributes: { exclude: ['password']}});
+      const verified = jwt.verify(token, jwtSecret_admin); 
+      
+      req.user = await AdminUser.findOne({where: {id: verified.id }, attributes: { exclude: ['password']}});
 
        next();  
      } catch (err) {

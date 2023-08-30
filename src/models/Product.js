@@ -38,7 +38,8 @@ const Product = sequelize.define('Product', {
     timestamps: true,
 });
 
-Product.belongsTo(AdminUser, { foreignKey: AdminUser.id });
-AdminUser.hasMany(Product);
+// Relacionamento entre Product e AdminUser
+Product.belongsTo(AdminUser, { foreignKey: 'AdminUserId', as: 'adminUser' });
+AdminUser.hasMany(Product, { foreignKey: 'AdminUserId', as: 'products' });
 
 module.exports = Product;

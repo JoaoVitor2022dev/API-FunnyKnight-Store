@@ -50,7 +50,23 @@ user {
     1 - finalizar o requerimento do endereço e testar ele; 
 }
 
+// finaliado com sucesso
+
 3 - criar o models, controller e router para os produtos;
+
+// finalizando...
+
+4 - testar todas as funcionalidades 
+
+5 - fazer o deploy da api na AWS
+
+6 - fazer o deploy do banco de dados na AWS 
+
+7 - fazer o deploy da uploads das imagens na AWS 
+
+8 - testar a API 
+
+
 
 
 

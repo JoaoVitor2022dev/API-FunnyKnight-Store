@@ -1,17 +1,16 @@
 const AdminUser = require("../models/AdminUser");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_SECRET; 
+const jwtSecret_admin = process.env.JWT_SECRET_ADMIN; 
 
 // Generate user Token 
 const generateToken = (id) => { 
-    return jwt.sign({id}, jwtSecret, {
+    return jwt.sign({id}, jwtSecret_admin, {
         expiresIn: "7d"
     });
 };
 
 // register user and sing in 
-
 const registerAdminUser = async (req, res) => {
     
     const { name, email, password } = req.body;
@@ -19,7 +18,7 @@ const registerAdminUser = async (req, res) => {
     try {
         const dataExistInTable = await AdminUser.count();
         
-        if (dataExistInTable <= 1) {
+        if (!dataExistInTable === 0) {
             res.status(401).json({ errors: ["Faça Login para poder criar um novo Usuario Administrador"] });
             return;
         }

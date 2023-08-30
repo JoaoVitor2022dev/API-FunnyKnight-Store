@@ -11,12 +11,12 @@ const { productCreateValidation } = require("../middlewares/productValidations")
 const validate = require("../middlewares/handleValidation");
 
 // authGard
-const authGuard = require("../middlewares/authGuard");
+const authGuardAdmin = require("../middlewares/authGuardAdmin");
 
 // uploads photoProdutc 
 const { imageUpload } = require("../middlewares/imageUpload");
 
 // Routes 
-router.post("/", authGuard, imageUpload.single("image"), productCreateValidation(), validate ,insertProduct);
+router.post("/insert", authGuardAdmin ,imageUpload.single("image") ,productCreateValidation() , validate , insertProduct);
 
 module.exports = router; 
