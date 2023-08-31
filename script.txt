@@ -52,7 +52,11 @@ user {
 
 // finaliado com sucesso
 
-3 - criar o models, controller e router para os produtos;
+3 - criar o models, controller e router para os produtos; {
+
+    1 - criar produto 
+    2 - deletar produto
+}
 
 // finalizando...
 

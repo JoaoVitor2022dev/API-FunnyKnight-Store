@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // controller 
-const { insertAddress, updateAddress } = require('../controllers/AddressController');
+const { insertAddress, updateAddress, getAdressByToken } = require('../controllers/AddressController');
 
 // validation erros 
 const validate = require("../middlewares/handleValidation");
@@ -16,6 +16,7 @@ const { addressValidation, addressUpdateValidation } = require("../middlewares/a
 // Routes 
 router.post("/register", authGuard, addressValidation(), validate , insertAddress);
 router.patch("/update", authGuard, addressUpdateValidation(), validate, updateAddress); 
+router.get("/", authGuard, getAdressByToken); 
 
 module.exports = router; 
 

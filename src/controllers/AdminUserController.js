@@ -114,6 +114,7 @@ const AdminUserUpdate = async (req, res) => {
     const { name, password, email } = req.body;
     const reqUser = req.user;
 
+      try {
         const adminUser = await AdminUser.findOne({ where: reqUser.id , attributes: { exclude: ['password']}});
         
         if (!adminUser) {
@@ -147,6 +148,9 @@ const AdminUserUpdate = async (req, res) => {
         await adminUser.save();
 
         res.status(200).json(adminUser);
+      } catch (error) {
+        res.status(500).json({ errors: ["Ocorreu um erro, tente novamente mais tarde."] });
+      }
 }; 
 
 
