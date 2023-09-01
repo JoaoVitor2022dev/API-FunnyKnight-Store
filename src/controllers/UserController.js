@@ -12,7 +12,7 @@ const generateToken = (id) => {
 
 // register user and sing in 
 const register = async (req, res) => {
-    const { name, email, phone, address, password} = req.body;
+    const { name, email, phone, password} = req.body;
      
     try {
         const existingEmailUser = await User.findOne({ where: { email } }); 
@@ -78,7 +78,7 @@ const getCurrentUser = async (req, res) => {
 }; 
 
 const userUpdate = async (req, res) => {
-    const { name, address, password, phone, email } = req.body;
+    const { name, password, phone, email } = req.body;
     const reqUser = req.user;
 
     try {
