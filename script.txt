@@ -18,7 +18,7 @@
 // back end 
 
 // depois - 1 - quero madar para um dashboard os valor dos produtos e com a informaçao do usuario seja enviada para um dashboar admin; 
-2 - criar um sistema para o admin 
+2 - criar um sistema para o admin / 
 3 - criar tabelas de dados como adress 
 4 - criar uma tabela de pedidos  
 
@@ -55,7 +55,8 @@ user {
 3 - criar o models, controller e router para os produtos; {
 
     1 - criar produto 
-    2 - deletar produto
+    2 - deletar produto 
+    3 - 
 }
 
 // finalizando...

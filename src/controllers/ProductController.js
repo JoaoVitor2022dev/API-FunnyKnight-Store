@@ -67,9 +67,37 @@ const deleteProduct = async (req, res) => {
 }; 
 
 
+const getAllProdutcs = async (req, res) => {
+  try {
+    const products = await Product.findAll(); 
+
+    res.status(200).json(products);  
+  } catch (error) {
+    res.status(500).json({ errors: ["Ocorreu um erro, tente novamente mais tarde."] });
+  }
+}; 
+
+const getProdutcsById = async (req, res ) => {
+    
+    const { id } = req.params; 
+
+    const product = await Product.findOne({ where: { id } }); 
+
+    if (!product) {
+        res.status(422).json({  errors: ["O produto nao existe"] }); 
+        return;  
+    }
+
+    res.status(200).json(product); 
+
+}; 
+  
+
 module.exports = {
     insertProduct,
-    deleteProduct
+    deleteProduct,
+    getAllProdutcs,
+    getProdutcsById
 }
 
 
