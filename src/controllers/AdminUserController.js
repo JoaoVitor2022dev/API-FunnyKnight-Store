@@ -17,8 +17,10 @@ const registerAdminUser = async (req, res) => {
     
     try {
         const dataExistInTable = await AdminUser.count();
+
+        console.log(dataExistInTable);
         
-        if (!dataExistInTable === 0) {
+        if (dataExistInTable > 0) {
             res.status(401).json({ errors: ["Faça Login para poder criar um novo Usuario Administrador"] });
             return;
         }
@@ -97,7 +99,7 @@ const loginAdminUser = async (req, res) => {
 
     // check password is true
     if (!(await bcrypt.compare(password, adminUser.password))) {
-         res.status(422).json({ errors: [`${user.adminUser}, sua senha esta incorreta. :(`]});
+         res.status(422).json({ errors: [`${adminUser.name}, sua senha esta incorreta. :(`]});
          return;
     }
         // return user with token 
@@ -109,12 +111,12 @@ const loginAdminUser = async (req, res) => {
 
 }; 
 
-
 const AdminUserUpdate = async (req, res) => {
     const { name, password, email } = req.body;
     const reqUser = req.user;
 
       try {
+
         const adminUser = await AdminUser.findOne({ where: reqUser.id , attributes: { exclude: ['password']}});
         
         if (!adminUser) {

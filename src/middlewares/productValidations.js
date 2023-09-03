@@ -18,9 +18,20 @@ const productCreateValidation = () => {
     ];
 };  
 
+const productUpdateValidation = () => {
+    return [
+        body("description").optional().isLength({ min: 5 }).withMessage("A descrição precisa ter no mínimo 5 letras"),
+        body("productName").optional().isLength({ min: 3 }).withMessage("O nome do produto deve ter no mínimo 3 letras"),
+        body("productSize").optional().isLength({ min: 1 }).withMessage("Forneça o tamanho do produto. (M/P/G)"),
+        body("color").optional().isLength({ min: 4 }).withMessage("Insira a cor do produto"),
+        body("price").optional().isLength({ min: 1 }).withMessage("Insira o preço do produto"), 
+        body("clothingAge").optional().isLength({ min: 1 }).withMessage("Insira a idade do usuário do produto"),
+    ]
+}; 
+
 
 module.exports = { 
-    productCreateValidation
+    productCreateValidation,
+    productUpdateValidation, 
 }
-
 

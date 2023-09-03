@@ -1,10 +1,12 @@
 const Product = require("../models/Product"); 
 
 const insertProduct = async (req, res) => {
+
+    console.log(req.file);
     
     const { description, productName, productSize, color, price, availability, clothingAge, productCode } = req.body; 
     const image = req.file.filename;  
-
+    
 try {
 
     const existingProductCode = await Product.findOne({ where: { productCode } }); 
@@ -81,6 +83,7 @@ const getProdutcsById = async (req, res ) => {
     
     const { id } = req.params; 
 
+    try {
     const product = await Product.findOne({ where: { id } }); 
 
     if (!product) {
@@ -89,15 +92,67 @@ const getProdutcsById = async (req, res ) => {
     }
 
     res.status(200).json(product); 
-
+    } catch (error) {
+    res.status(500).json({ errors: ["Ocorreu um erro, tente novamente mais tarde."] });    
+    }
 }; 
+
+
+
+const updateProduct = async (req, res) => {
   
+    const { description, productName, productSize, color, price, clothingAge } = req.body; 
+
+    const reqUser = req.user; 
+
+    try {
+        
+        const product = await Product.findOne({ where: { id: reqUser.id } }); 
+
+        if (!product) {
+            res.status(200).json({ errors: ["O produto não existe."] }); 
+            return; 
+        }
+
+        if (description) {
+            product.description = description; 
+        }
+
+        if (productName) {
+            product.productName = productName; 
+        }
+
+        if (productSize) {
+            product.productSize = productSize;
+        }
+
+        if (color) {
+            product.color = color; 
+        }
+
+        if(price){
+           product.price = price;  
+        }
+
+        if (clothingAge) {
+            product.clothingAge = clothingAge; 
+        }
+
+       await product.save();
+
+    res.status(201).json(product); 
+    } catch (error) {
+    res.status(500).json({ errors: ["Ocorreu um erro, tente novamente mais tarde."] }); 
+    }
+
+};
 
 module.exports = {
     insertProduct,
     deleteProduct,
     getAllProdutcs,
-    getProdutcsById
+    getProdutcsById,
+    updateProduct,
 }
 
 

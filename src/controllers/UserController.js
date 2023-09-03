@@ -30,7 +30,7 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(); 
         const passwordHash = await bcrypt.hash(password, salt);
         
-        const newUser = await User.create({ name, email, address, phone, password: passwordHash }); 
+        const newUser = await User.create({ name, email, phone, password: passwordHash }); 
         
         if (!newUser) {
              return res.status(422).json({ errors: ["Ocorreu um erro, tente mais tarde."] }); 
@@ -94,9 +94,9 @@ const userUpdate = async (req, res) => {
         }
 
         // Check phone
-        if (phone && user.phone !== phone) {
-            const phoneExists = await User.findOne({ where: { phone } });
+        const phoneExists = await User.findOne({ where: { phone } });
 
+        if (phone && user.phone !== phone) {
             if (phoneExists) {
                 res.status(400).json({ errors: ["Opa! Escolha outro número, este número já está em uso no nosso banco de dados."] });
                 return;
@@ -114,10 +114,6 @@ const userUpdate = async (req, res) => {
                 return;
         }
             user.email = email;
-        }
-
-        if (address) {
-            user.address = address;
         }
 
         if (password) {
@@ -142,6 +138,6 @@ module.exports = {
     register,
     login,
     getCurrentUser,
-    userUpdate
+    userUpdate,
 }
 
