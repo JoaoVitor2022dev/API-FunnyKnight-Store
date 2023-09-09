@@ -58,7 +58,6 @@ try {
     }
 };
 
-
 const getAdressByToken = async (req, res) => {
    
     const reqUser = req.user;

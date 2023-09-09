@@ -16,7 +16,7 @@ const validate = require("../middlewares/handleValidation");
 const authGuardAdmin = require("../middlewares/authGuardAdmin");
 
 // Routes 
-router.post("/insert", authGuardAdmin ,multer(configMulter).single('file'), productCreateValidation(), validate ,insertProduct ); 
+router.post("/insert", authGuardAdmin , multer(configMulter).single('file'), productCreateValidation(), validate ,insertProduct ); 
 router.delete("/:id", authGuardAdmin, deleteProduct); 
 router.get("/all", getAllProdutcs); 
 router.get("/:id", getProdutcsById); 

@@ -1,11 +1,19 @@
 const Product = require("../models/Product"); 
+const ProductImage = require("../models/ProductImage");
 
-const insertProduct = async (req, res) => {
-
-    console.log(req.file);
+const insertProduct = async (req, res) => {    
+ 
+    const {originalname: name, size, filename: key, url = "" } = req.file; 
     
+    const productImage = await ProductImage.create({
+         name, 
+         size,
+         key,
+         url
+    }); 
+
     const { description, productName, productSize, color, price, availability, clothingAge, productCode } = req.body; 
-    const image = req.file.filename;  
+    const image = req.file.filename; 
     
 try {
 
@@ -35,7 +43,7 @@ try {
         res.status(500).json({errors:["Ocorreu um erro, tente novamente mais tarde."]});
         return;  
    }
-    res.status(201).json(newProduct); 
+    res.status(201).json({ product: newProduct, imageProduct: productImage }); 
 } catch (error) {
     res.status(500).json({ errors: ["Ocorreu um erro ao criar o produto, por favor tente novamente mais tarde."]});  
 }

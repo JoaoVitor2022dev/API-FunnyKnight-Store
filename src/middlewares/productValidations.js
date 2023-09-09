@@ -9,7 +9,7 @@ const productCreateValidation = () => {
         body("price").isNumeric().withMessage("O valor do produto é obrigatório.").isLength({ min: 1 }).withMessage("Insira o preço do produto"), 
         body("productCode").isString().withMessage("O código do produto é obrigatório.").isLength({ min: 5 }).withMessage("O código do produto precisa ter no mínimo 5 caracteres"),
         body("clothingAge").isNumeric().withMessage("A idade do usuário do produto é obrigatória.").isLength({ min: 1 }).withMessage("Insira a idade do usuário do produto"),
-        body("image").custom((value, { req }) => {
+        body("file").custom((value, { req }) => {
             if (!req.file) {
                 throw new Error("A imagem é obrigatória");
             }
