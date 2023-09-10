@@ -10,7 +10,8 @@
     "sequelize-create-tables": "sequelize db:migrate --env production"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+     "mysql2": "^3.6.0",
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.405.0",
