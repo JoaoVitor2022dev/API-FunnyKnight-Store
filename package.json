@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "vercel-build": "yarn run sequelize-migrate && vercel"
+    "start": "node src/server.js"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
