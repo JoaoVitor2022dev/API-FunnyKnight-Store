@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "vercel-build": "yarn run sequelize-create-tables && vercel"
+    "vercel-build": "npm run sequelize-create-tables && vercel",
+    "sequelize-create-tables": "sequelize db:migrate --env production"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
