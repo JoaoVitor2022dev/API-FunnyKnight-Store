@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "vercel-build": "yarn run sequelize-migrate && vercel",
+    "sequelize-migrate": "sequelize db:migrate --url 'mysql://admin:JesusCristo123@funnyknightdatabase.crphnr5odmbp.us-east-1.rds.amazonaws.com/funnyknight_data_base'"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
